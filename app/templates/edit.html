@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Routiner</title>
+  </head>
+  <body>
+    <form action="{{ url_for('main.edit', index=index) }}" method="post">
+      <input type="text" name="todo" value="{{todo['content']}}" />
+      <button type="submit">Save to List</button>
+    </form>
+  </body>
+</html>
