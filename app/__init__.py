@@ -21,6 +21,10 @@ todos=[
 
 @app.route('/')
 def index():
+    return render_template("login.html")
+
+@app.route('/login')
+def homepage():
     return render_template("index.html", name=random.choice(names), todos=todos)
 
 @app.route('/add', methods=['POST'])
@@ -32,7 +36,7 @@ def add():
         "status": False
     })
     # Append the value to the 'todos' array
-    return redirect(url_for("index"))
+    return redirect(url_for("homepage"))
     # Redirect to the index page
     # The index page will re-load the template based on the 'todos' array which is just updated.
 
@@ -41,19 +45,23 @@ def edit(index):
     todo = todos[index]
     if request.method == 'POST':
         todo['content'] = request.form['todo']
-        return redirect(url_for("index"))
+        return redirect(url_for("homepage"))
     else:
         return render_template("edit.html", todo=todo, index=index)
     
 @app.route("/check/<int:index>")
 def check(index):
     todos[index]['status'] = not todos[index]['status']
-    return redirect(url_for("index"))
+    return redirect(url_for("homepage"))
 
-@app.route("/delete/<int:index>")
+@app.route("/delete/<int:index>", methods=['GET','POST'])
 def delete(index):
-    del todos[index]
-    return redirect(url_for("index"))
+    if request.method == 'POST':
+        del todos[index]
+        return redirect(url_for("homepage"))
+    else:
+        return render_template("delete.html", index=index)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

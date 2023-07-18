@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Routiner</title>
+  </head>
+  <body>
+    <h3>Do you really want to delete the todo?</h3>
+    <form action="{{ url_for('delete', index=index) }}" method="post">
+      <button type="submit">Yes</button>
+    </form>
+
+    <form action="{{ url_for('homepage') }}" method="get">
+      <button type="submit">Cancel</button>
+    </form>
+  </body>
+</html>
