@@ -7,11 +7,11 @@
   </head>
   <body>
     <h3>Do you really want to delete the todo?</h3>
-    <form action="{{ url_for('delete', index=index) }}" method="post">
+    <form action="{{ url_for('main.delete', index=index) }}" method="post">
       <button type="submit">Yes</button>
     </form>
 
-    <form action="{{ url_for('homepage') }}" method="get">
+    <form action="{{ url_for('main.todo') }}" method="get">
       <button type="submit">Cancel</button>
     </form>
   </body>
