@@ -1,14 +1,14 @@
 # WhatTodo
 
  
-## 파이썬 가상환경으로 실행하기
+## Python Virtual Environment
 
  ```bash
  cd {HOME_PATH}/WhatTodo/venv/bin
  source activate
  ```
 
- ## 파이썬 flask run
+ ## Python flask run
  ```bash
  flask run
  ```
