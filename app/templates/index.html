@@ -21,9 +21,9 @@
           <span {% if todo.status %} style="text-decoration: line-through;" {% endif %}>
             {{todo.content}}
           </span>
-          <a href="{{ url_for('main.check', index=loop.index0) }}">Done</a>
-          <a href="{{ url_for('main.edit', index=loop.index0) }}">Edit</a>
-          <a href="{{ url_for('main.delete', index=loop.index0) }}">Delete</a>
+          <a href="{{ url_for('main.check', index=todo.id) }}">Done</a>
+          <a href="{{ url_for('main.edit', index=todo.id) }}">Edit</a>
+          <a href="{{ url_for('main.delete', index=todo.id) }}">Delete</a>
         </li>
         {% endfor %}
       </ul>
