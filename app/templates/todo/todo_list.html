@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block header %}
+<h1>To Do List</h1>
+{% endblock %}
+{% block main %}
+<form action="{{ url_for('todo.add') }}" method="post">
+  <input type="text" placeholder="What would you do today?" name="todo" />
+  <button type="submit">Add to List</button>
+</form>
+<ul>
+  {% for todo in todos %}
+  <li>
+    <input
+      type="checkbox"
+      name="status"
+      {%
+      if
+      todo.status
+      %}
+      checked
+      {%
+      endif
+      %}
+    />
+    <span
+      {%
+      if
+      todo.status
+      %}
+      style="text-decoration: line-through"
+      {%
+      endif
+      %}
+    >
+      {{todo.content}}
+    </span>
+    <button><a href="{{ url_for('todo.status_check', todo_id=todo.id) }}">Done</a></button>
+    <button><a href="{{ url_for('todo.edit', todo_id=todo.id) }}">Edit</a></button>
+    <button><a href="{{ url_for('todo.confirm_delete', todo_id=todo.id) }}">Delete</a></button>
+  </li>
+  {% endfor %}
+</ul>
+</main>
+{% endblock %}

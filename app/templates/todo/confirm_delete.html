@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block header %}
+<h1>Are you sure you want to delete this todo?</h1>
+{% endblock %} {% block main %}
+<form action="{{ url_for('todo.delete', todo_id=todo.id) }}" method="post">
+  <button type="submit">Yes</button>
+</form>
+
+<form action="{{ url_for('todo.delete',todo_id=todo.id) }}" method="get">
+  <button type="submit">Cancel</button>
+</form>
+{% endblock %}

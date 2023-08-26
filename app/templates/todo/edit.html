@@ -1,0 +1,6 @@
+{% extends 'base.html' %} {% block header %} {% endblock %} {% block main %}
+<form action="{{ url_for('todo.edit', todo_id=todo.id) }}" method="post">
+  <input type="text" name="todo" value="{{todo['content']}}" />
+  <button type="submit">Save to List</button>
+</form>
+{% endblock %}

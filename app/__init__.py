@@ -8,7 +8,6 @@ import config
 db = SQLAlchemy()
 migrate = Migrate()
 
-
 def create_app():
     app = Flask(__name__)
 
@@ -22,11 +21,12 @@ def create_app():
     from app.data import todo_model
 
     # 3. Blueprint view
-    from app.views import main_views
+    from app.views import main_views, user_views, todo_views
     app.register_blueprint(main_views.bp)
+    app.register_blueprint(user_views.bp)
+    app.register_blueprint(todo_views.bp)
 
     return app
-
 
 if __name__ == '__main__':
 
