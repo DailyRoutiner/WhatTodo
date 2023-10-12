@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap5
 
 import config
 
@@ -11,6 +12,7 @@ migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
+    bootstrap = Bootstrap5(app)
 
     # 1. Add configuration of database
     app.config.from_object(config)
@@ -27,9 +29,14 @@ def create_app():
 
     return app
 
+app = create_app()
+
+@app.route('/layout')
+def layout():
+    return render_template('layout.html');
 
 if __name__ == '__main__':
 
-    create_app().run(debug=True)
+    app.run(debug=True)
 
 

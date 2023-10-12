@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Daily Routiner</title>
-  </head>
-  <body>
-    <h3>Do you really want to delete the todo?</h3>
-    <form action="{{ url_for('main.delete', index=index) }}" method="post">
-      <button type="submit">Yes</button>
-    </form>
-
-    <form action="{{ url_for('main.todo') }}" method="get">
-      <button type="submit">Cancel</button>
-    </form>
-  </body>
-</html>
+{% extends "layout.html" %} {% block content %}
+<h1 class="text-center display-4 mt-4">
+  Do you really want to delete the todo?
+</h1>
+<div class="d-flex justify-content-center p-4 m-4">
+  <form action="{{ url_for('main.delete', index=index) }}" method="post">
+    <button type="submit" class="btn btn-primary me-2">Yes</button>
+  </form>
+  <form action="{{ url_for('main.index') }}" method="get">
+    <button type="submit" class="btn btn-primary">Cancel</button>
+  </form>
+</div>
+{% endblock %}

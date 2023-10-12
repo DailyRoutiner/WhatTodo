@@ -9,6 +9,8 @@ bp = Blueprint('main', __name__, url_prefix='/')
 
 names = ["Dany", "Jun"]
 
+
+
 @bp.route('/')
 def index():
     todo_list = Todo.query.all()
@@ -48,12 +50,16 @@ def check(index):
     return redirect(url_for("main.index"))
 
 
-@bp.route("/delete/<int:index>")
+@bp.route("/delete/<int:index>", methods=["GET", "POST"])
 def delete(index):
     # del todos[index]
-    db.session.delete(Todo.query.get(index))
-    db.session.commit()
-    return redirect(url_for("main.index"))
+    if request.method == "POST":
+        db.session.delete(Todo.query.get(index))
+        db.session.commit()
+        return redirect(url_for("main.index"))
+    else:
+        return render_template("delete.html", index=index)
+
 
 
 @bp.route('/hello')
