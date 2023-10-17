@@ -12,9 +12,9 @@ names = ["Dany", "Jun"]
 
 
 @bp.route('/')
-def index():
+def todo():
     todo_list = Todo.query.all()
-    return render_template("index.html", name=random.choice(names), todos=todo_list)
+    return render_template("todo.html", todos=todo_list)
 
 
 @bp.route('/add', methods=['POST'])
@@ -25,20 +25,9 @@ def add():
     db.session.add(todo_obj)
     db.session.commit()
     # Append the value to the 'todos' array
-    return redirect(url_for("main.index"))
+    return redirect(url_for("main.todo"))
     # Redirect to the index page
     # The index page will re-load the template based on the 'todos' array which is just updated.
-
-
-@bp.route('/edit/<int:index>', methods=['GET','POST'])
-def edit(index):
-    todo = Todo.query.get(index)
-    if request.method == 'POST':
-        todo.content = request.form['todo']
-        db.session.commit()
-        return redirect(url_for("main.index"))
-    else:
-        return render_template("edit.html", todo=todo, index=index)
 
 
 @bp.route("/check/<int:index>")
@@ -47,18 +36,30 @@ def check(index):
     todo = Todo.query.get(index)
     todo.status = not todo.status
     db.session.commit()
-    return redirect(url_for("main.index"))
+    return redirect(url_for("main.todo"))
+
+
+@bp.route('/edit/<int:index>', methods=['GET','POST'])
+def edit(index):
+    todo = Todo.query.get(index)
+    if request.method == 'POST':
+        todo.content = request.form['todo']
+        db.session.commit()
+        return redirect(url_for("main.todo"))
+    else:
+        return render_template("edit.html", todo=todo, index=index)
 
 
 @bp.route("/delete/<int:index>", methods=["GET", "POST"])
 def delete(index):
     # del todos[index]
+    todo = Todo.query.get(index)
     if request.method == "POST":
         db.session.delete(Todo.query.get(index))
         db.session.commit()
-        return redirect(url_for("main.index"))
+        return redirect(url_for("main.todo"))
     else:
-        return render_template("delete.html", index=index)
+        return render_template("delete.html", todo=todo, index=index)
 
 
 
