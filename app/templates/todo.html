@@ -17,9 +17,12 @@
       <ul>
         {% for todo in todos %}
         <li>
-          <input type="checkbox" name="status" {% if todo['status'] %} checked {% endif %} /> 
-          <span {% if todo['status'] %} style="text-decoration: line-through;" {% endif %}>
-            {{todo['content']}}
+          <input type="checkbox" name="status" {% if todo.status %} checked {% endif %} />
+          <span {% if todo.status %} style="text-decoration: line-through;" {% endif %}>
+            {{todo.content}}
+          </span>
+          <span {% if todo.status %} style="text-decoration: line-through;" {% endif %}>
+            {{todo.create_date}}
           </span>
           <a href="{{ url_for('main.check', index=loop.index0) }}">Done</a>
           <a href="{{ url_for('main.edit', index=loop.index0) }}">Edit</a>
