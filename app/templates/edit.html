@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Daily Routiner</title>
-  </head>
-  <body>
-    <form action="{{ url_for('main.edit', index=index) }}" method="post">
-      <input type="text" name="todo" value="{{todo['content']}}" />
-      <button type="submit">Save to List</button>
-    </form>
-  </body>
-</html>
+{% extends "layout.html" %} {% block content %}
+<form action="{{ url_for('main.edit', index=index) }}" method="post">
+  <input
+    class="form-control mt-3"
+    type="text"
+    name="todo"
+    value="{{todo['content']}}"
+  />
+  <div class="d-flex justify-content-center p-4 m-4">
+    <button class="btn btn-primary me-2" type="submit">Save</button>
+    <a href="{{url_for('main.todo')}}" class="btn btn-primary">Cancel</a>
+  </div>
+</form>
+
+{% endblock %}
