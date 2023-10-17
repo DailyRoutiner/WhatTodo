@@ -11,7 +11,7 @@ names = ["Dany", "Jun"]
 
 @bp.route('/')
 def index():
-    todo_list = Todo.query.all()
+    todo_list = Todo.query.order_by(Todo.create_date.desc())
     return render_template("index.html", name=random.choice(names), todos=todo_list)
 
 
