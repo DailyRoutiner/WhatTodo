@@ -8,12 +8,6 @@
  source activate
  ```
 
- ## Python flask run
- ```bash
- flask run
- ```
-
- 
 ### Setup
 
 Activate it
@@ -26,10 +20,9 @@ or on Windows
 venv\Scripts\activate
 ```
 
-Install Flask
+Install Packages (Flask, SQLAlchemy ...)
 ```console
-$ pip install Flask
-$ pip install Flask-SQLAlchemy
+$ pip install -r requirements.txt
 ```
 
 Set environment variables in terminal
