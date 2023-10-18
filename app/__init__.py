@@ -24,16 +24,20 @@ def create_app():
     from app.data import todo_model
 
     # 3. Blueprint view
-    from app.views import main_views
+    from app.views import main_views, detail_views
     app.register_blueprint(main_views.bp)
+    app.register_blueprint(detail_views.bp)
 
     return app
 
+
 app = create_app()
+
 
 @app.route('/layout')
 def layout():
-    return render_template('layout.html');
+    return render_template('layout.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

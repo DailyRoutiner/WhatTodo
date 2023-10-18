@@ -32,7 +32,7 @@ def add():
 
 @bp.route('/edit/<int:index>', methods=['GET','POST'])
 def edit(index):
-    todo = Todo.query.get(index)
+    todo = Todo.query.get_or_404(index)
     if request.method == 'POST':
         todo.content = request.form['todo']
         db.session.commit()

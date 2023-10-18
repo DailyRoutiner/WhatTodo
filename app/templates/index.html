@@ -10,49 +10,33 @@
     />
     <button class="btn btn-primary mt-3 mb-3" type="submit">Add to List</button>
   </form>
-  <ul class="list-group">
-    {% for todo in todos %}
-    <li class="d-flex justify-content-between list-group-item mt-2">
-      <div>
-        <input
-          type="checkbox"
-          name="status"
-          {%
-          if
-          todo.status
-          %}
-          checked
-          {%
-          endif
-          %}
-        />
-        <span
-          {%
-          if
-          todo.status
-          %}
-          style="text-decoration: line-through"
-          {%
-          endif
-          %}
-        >
-          {{todo.content}}
-        </span>
-      </div>
+  {% if todos %}
+    <ul class="list-group">
+      {% for todo in todos %}
+      <li class="d-flex justify-content-between list-group-item mt-2">
+        <div>
+          <input
+            type="checkbox"
+            name="status"
+            {% if todo.status %} checked {% endif %}
+          />
+          <span {% if todo.status %} style="text-decoration: line-through" {% endif %} >
+            <a href="{{url_for('detail.edit', index=todo.id)}} ">{{todo.content}}</a>
+            <div>
+              {{todo.create_date}}
+            </div>
+          </span>
 
-      <div>
-        <a class="ml-2" href="{{ url_for('main.check', index=todo.id) }}"
-          >Done</a
-        >
-        <a class="ml-2" href="{{ url_for('main.edit', index=todo.id) }}"
-          >Edit</a
-        >
-        <a class="ml-2" href="{{ url_for('main.delete', index=todo.id) }}"
-          >Delete</a
-        >
-      </div>
-    </li>
-    {% endfor %}
-  </ul>
+        </div>
+
+        <div>
+          <a class="ml-2" href="{{ url_for('main.check', index=todo.id) }}">Done</a>
+          <a class="ml-2" href="{{ url_for('main.edit', index=todo.id) }}">Edit</a>
+          <a class="ml-2" href="{{ url_for('main.delete', index=todo.id) }}">Delete</a>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 </div>
 {% endblock %}
