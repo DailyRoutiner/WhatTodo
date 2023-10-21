@@ -1,4 +1,5 @@
 from datetime import datetime
+from sqlalchemy.sql import func
 from flask import render_template, Blueprint, request, redirect, url_for
 import random
 
@@ -14,6 +15,7 @@ names = ["Dany", "Jun"]
 @bp.route('/')
 def index():
     todo_list = Todo.query.order_by(Todo.create_date.desc())
+
     return render_template("index.html", name=random.choice(names), todos=todo_list)
 
 
