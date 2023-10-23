@@ -19,3 +19,11 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     create_date = db.Column(db.DateTime(), nullable=False)
 
+
+class Task(db.Model):
+    __tablename__ = 'task'
+    id = db.Column(db.Integer, primary_key=True)
+    subject = db.Column(db.String(300), nullable=False)
+    content = db.Column(db.String(1000), nullable=False)
+    todo_id = db.Column(db.Integer, db.ForeignKey('todolist.id'))
+    create_date = db.Column(db.DateTime(), nullable=False)
