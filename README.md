@@ -20,12 +20,12 @@ or on Windows
 venv\Scripts\activate
 ```
 
-Install Packages (Flask, SQLAlchemy ...)
+### Install Packages (Flask, SQLAlchemy ...)
 ```console
 $ pip install -r requirements.txt
 ```
 
-Set environment variables in terminal
+### Set environment variables in terminal
 ```console
 $ export FLASK_APP=app.py
 $ export FLASK_ENV=development
@@ -37,7 +37,7 @@ $ set FLASK_APP=app.py
 $ set FLASK_ENV=development
 ```
 
-Run the app
+### Run the app
 ```console
 $ flask run
 ```
