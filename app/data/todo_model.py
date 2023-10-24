@@ -12,7 +12,6 @@ class Todo(db.Model):
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-
     email = db.Column(db.String(255), nullable=False, unique=True)
     email_confirmed_at = db.Column(db.DateTime())
     username = db.Column(db.String(100), nullable=False)
@@ -23,7 +22,7 @@ class User(db.Model):
 class Task(db.Model):
     __tablename__ = 'task'
     id = db.Column(db.Integer, primary_key=True)
-    subject = db.Column(db.String(300), nullable=False)
-    content = db.Column(db.String(1000), nullable=False)
-    todo_id = db.Column(db.Integer, db.ForeignKey('todolist.id'))
+    content = db.Column(db.Text(), nullable=False)
+    todo_id = db.Column(db.Integer, db.ForeignKey('todolist.id', ondelete='CASCADE'))
+    todo = db.relationship('Todo', backref=db.backref('task_set', cascade='all, delete-orphan'))
     create_date = db.Column(db.DateTime(), nullable=False)

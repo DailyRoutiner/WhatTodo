@@ -11,7 +11,6 @@ bp = Blueprint('main', __name__, url_prefix='/')
 names = ["Dany", "Jun"]
 
 
-
 @bp.route('/')
 def index():
     todo_list = Todo.query.order_by(Todo.create_date.desc())
@@ -32,17 +31,6 @@ def add():
     # The index page will re-load the template based on the 'todos' array which is just updated.
 
 
-@bp.route('/edit/<int:index>', methods=['GET','POST'])
-def edit(index):
-    todo = Todo.query.get_or_404(index)
-    if request.method == 'POST':
-        todo.content = request.form['todo']
-        db.session.commit()
-        return redirect(url_for("main.index"))
-    else:
-        return render_template("edit.html", todo=todo, index=index)
-
-
 @bp.route("/check/<int:index>")
 def check(index):
     # todos[index]['status'] = not todos[index]['status']
@@ -61,9 +49,3 @@ def delete(index):
         return redirect(url_for("main.index"))
     else:
         return render_template("delete.html", index=index)
-
-
-
-@bp.route('/hello')
-def hello_jun():
-    return 'Hello Jun!'

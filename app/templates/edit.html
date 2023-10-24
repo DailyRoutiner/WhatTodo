@@ -7,6 +7,7 @@
     name="todo"
     value="{{todo['content']}}"
   />
+
   <div class="d-flex justify-content-center p-4 m-4">
     <button class="btn btn-primary me-2" type="submit">Save</button>
     <a href="{{url_for('main.index')}}" class="btn btn-primary">Cancel</a>
@@ -14,19 +15,23 @@
 
 </form>
 
-<form class="post-form my-3" action="{{ url_for('detail.edit', index=index, task_form=form) }}">
+<form  class="post-form my-3" method="post">
+  {{ form.csrf_token }}
   <h5 class="my-3 border-bottom pb-2">Details</h5>
-  <div class="form-group">
-    <label for="subject">Subject</label>
-    <input type="text" class="form-control" name="subject" id="subject">
+
+  {% for field, errors in form.errors.items() %}
+  <div class="alert alert-danger" role="alert">
+    <strong>{{ form[field].label }}</strong> : {{ ', '.join(errors) }}
   </div>
+  {% endfor %}
+
   <div class="form-group">
     <label for="content">Content</label>
     <textarea class="form-control" name="content" id="content" rows="5"></textarea>
   </div>
     
   <button class="btn btn-primary me-2" type="submit">Save</button>
-  </div>
+
 </form>
 
 {% endblock %}

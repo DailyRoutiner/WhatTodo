@@ -19,7 +19,7 @@ def create_app():
 
     # 2. ORM - $ flask db init
     db.init_app(app)
-    migrate.init_app(app, db)  # app, sqlite
+    migrate.init_app(app, db, render_as_batch=True)  # app, sqlite
 
     from app.data import todo_model
 
