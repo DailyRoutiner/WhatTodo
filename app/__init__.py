@@ -8,11 +8,12 @@ import config
 # Call modules from out scope because of blueprint
 db = SQLAlchemy()
 migrate = Migrate()
+bootstrap = Bootstrap5()
 
 
 def create_app():
     app = Flask(__name__)
-    bootstrap = Bootstrap5(app)
+    bootstrap.init_app(app)
 
     # 1. Add configuration of database
     app.config.from_object(config)
