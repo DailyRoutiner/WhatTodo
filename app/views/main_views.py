@@ -13,7 +13,10 @@ names = ["Dany", "Jun"]
 
 @bp.route('/')
 def index():
+    # Paging function
+    page = request.args.get('page', type=int, default=1)
     todo_list = Todo.query.order_by(Todo.create_date.desc())
+    todo_list = todo_list.paginate(page=page, per_page=10)           # wrap pagination objects
 
     return render_template("index.html", name=random.choice(names), todos=todo_list)
 
