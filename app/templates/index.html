@@ -16,6 +16,7 @@
       <table class="table">
         <thead>
         <tr class="thead-dark">
+          <th>Num</th>
           <th>Task</th>
           <th>Progress</th>
         </tr>
@@ -24,13 +25,16 @@
          {% for todo in todos.items %}
           <tr>
             <td>
+              {{ todos.total - ((todos.page - 1) * todos.per_page) - loop.index0 }}
+            </td>
+            <td>
               <input type="checkbox" name="status"
                 {% if todo.status %} checked {% endif %}
               />
               <span {% if todo.status %} style="text-decoration: line-through" {% endif %} >
                 <a href="{{url_for('detail.create', index=todo.id)}} ">{{todo.content}}</a>
                 <div>
-                  {{todo.create_date}}
+                  {{ todo.create_date|datetime }}
                 </div>
               </span>
             </td>
