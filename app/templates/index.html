@@ -33,6 +33,9 @@
               />
               <span {% if todo.status %} style="text-decoration: line-through" {% endif %} >
                 <a href="{{url_for('detail.create', index=todo.id)}} ">{{todo.content}}</a>
+                {% if todo.task_set|length >= 0 %}
+                <span class="text-danger small ml-2">{{ todo.task_set|length }} </span>
+                {% endif %}
                 <div>
                   {{ todo.create_date|datetime }}
                 </div>
