@@ -13,7 +13,7 @@ bootstrap = Bootstrap5()
 
 def create_app():
     app = Flask(__name__)
-    bootstrap.init_app(app)
+    bootstrap.init_app(app)     # bootstrap init
 
     # 1. Add configuration of database
     app.config.from_object(config)
@@ -25,9 +25,10 @@ def create_app():
     from app.data import todo_model
 
     # 3. Blueprint view
-    from app.views import main_views, detail_views
+    from app.views import main_views, detail_views, auth_views
     app.register_blueprint(main_views.bp)
     app.register_blueprint(detail_views.bp)
+    app.register_blueprint(auth_views.auth_bp)
 
     # 4. Filter
     from .filter import format_datetime
