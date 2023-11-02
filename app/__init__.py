@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap5
+from flask_wtf import CSRFProtect
 
 import config
 
@@ -17,6 +18,8 @@ def create_app():
 
     # 1. Add configuration of database
     app.config.from_object(config)
+    csrf = CSRFProtect(app)
+    csrf.init_app(app)
 
     # 2. ORM - $ flask db init
     db.init_app(app)

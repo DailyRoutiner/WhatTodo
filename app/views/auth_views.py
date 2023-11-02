@@ -5,6 +5,7 @@ from werkzeug.utils import redirect
 from app import db
 from app.views.forms import UserCreateForm
 from app.data.todo_model import User
+from datetime import datetime
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -18,11 +19,12 @@ def signup():
         if not user:
             user = User(username=form.username.data,
                         password=generate_password_hash(form.password.data),
-                        email=form.email.data)
+                        email=form.email.data,
+                        create_date=datetime.now())
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('main.index'))
         else:
             flash('Already ID Exists!')
 
-        return render_template('auth/signup.html', form=form)
+    return render_template('signup.html', form=form)
