@@ -1,13 +1,20 @@
 from datetime import datetime
-from flask import render_template, Blueprint, request, redirect, url_for
+from flask import render_template, Blueprint, request, redirect, url_for, g
+
+from .auth_views import login_required
 from ..views.forms import TaskForm
 from app import db
 from app.data.todo_model import Todo, Task
 
 bp = Blueprint('detail', __name__, url_prefix='/detail')
 
+@bp.route('/')
+def detail():
+    pass
+
 
 @bp.route('/<int:index>', methods=['GET', 'POST'])
+@login_required
 def create(index):
     todo = Todo.query.get_or_404(index)
     form = TaskForm()
@@ -15,13 +22,14 @@ def create(index):
 
         task = Task(content=form.content.data,
                     todo_id=todo.id,
-                    create_date=datetime.now())
+                    create_date=datetime.now(),
+                    user=g.user)
         #db.session.add(task)
         todo.task_set.append(task)
-        # db.session.commit()
+        db.session.commit()
         return redirect(url_for('detail.create', index=index))
     else:
-        return render_template("edit.html", todo=todo, index=index, form=form)
+        return render_template("detail.html", todo=todo, index=index, form=form)
 
 
 @bp.route('/edit/<int:index>', methods=['GET','POST'])
@@ -32,4 +40,4 @@ def edit(index):
         db.session.commit()
         return redirect(url_for("main.index"))
     else:
-        return render_template("edit.html", todo=todo, index=index)
+        return render_template("detail.html", todo=todo, index=index)

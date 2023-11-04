@@ -1,6 +1,6 @@
 from datetime import datetime
-from sqlalchemy.sql import func
-from flask import render_template, Blueprint, request, redirect, url_for
+from .auth_views import login_required
+from flask import render_template, Blueprint, request, redirect, url_for, g
 import random
 
 from app import db
@@ -22,10 +22,11 @@ def index():
 
 
 @bp.route('/add', methods=['POST'])
+@login_required
 def add():
     todo = request.form['todo']
     # Fetch the value from the element that has 'todo' name
-    todo_obj = Todo(content=todo, status=False, create_date=datetime.now())
+    todo_obj = Todo(content=todo, status=False, create_date=datetime.now(), user=g.user)
     db.session.add(todo_obj)
     db.session.commit()
     # Append the value to the 'todos' array

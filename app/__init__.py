@@ -2,12 +2,20 @@ from flask import Flask, render_template
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap5
-from flask_wtf import CSRFProtect
+from sqlalchemy import MetaData
 
 import config
 
+naming_convention = {
+    "ix": "ix_%(column_0_label)s",
+    "uq": "uq_%(table_name)s_%(column_0_name)s",
+    "ck": "ck_%(table_name)s_%(column_0_name)s",
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+    "pk": "pk_%(table_name)s"
+}
+
 # Call modules from out scope because of blueprint
-db = SQLAlchemy()
+db = SQLAlchemy(metadata=MetaData(naming_convention=naming_convention))
 migrate = Migrate()
 bootstrap = Bootstrap5()
 
@@ -18,12 +26,15 @@ def create_app():
 
     # 1. Add configuration of database
     app.config.from_object(config)
-    csrf = CSRFProtect(app)
-    csrf.init_app(app)
+    # csrf = CSRFProtect(app)
+    # csrf.init_app(app)
 
     # 2. ORM - $ flask db init
     db.init_app(app)
-    migrate.init_app(app, db, render_as_batch=True)  # app, sqlite
+    if app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite'):
+        migrate.init_app(app, db, render_as_batch=True)  # app, sqlite
+    else:
+        migrate.init_app(app, db)
 
     from app.data import todo_model
 

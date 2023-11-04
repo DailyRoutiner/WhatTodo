@@ -7,6 +7,8 @@ class Todo(db.Model):
     content = db.Column(db.String(300), nullable=False)
     status = db.Column(db.Boolean, nullable=False)
     create_date = db.Column(db.DateTime(), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    user = db.relationship('User', backref=db.backref('todo_set'))
 
 
 class User(db.Model):
@@ -26,3 +28,5 @@ class Task(db.Model):
     todo_id = db.Column(db.Integer, db.ForeignKey('todolist.id', ondelete='CASCADE'))
     todo = db.relationship('Todo', backref=db.backref('task_set', cascade='all, delete-orphan'))
     create_date = db.Column(db.DateTime(), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    user = db.relationship('User', backref=db.backref('task_set'))
