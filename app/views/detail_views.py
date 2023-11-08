@@ -1,10 +1,10 @@
 from datetime import datetime
 from flask import render_template, Blueprint, request, redirect, url_for, g
 
-from .auth_views import login_required
-from ..views.forms import TaskForm
-from app import db
-from app.data.todo_model import Todo, Task
+from .auth_views import login_required      # auth controller
+from ..views.forms import TaskForm          # web form
+from app import db # db session
+from app.data.todo_model import Todo, Task  # model
 
 bp = Blueprint('detail', __name__, url_prefix='/detail')
 
