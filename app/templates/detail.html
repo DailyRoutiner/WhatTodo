@@ -19,6 +19,10 @@
   {{ form.csrf_token }}
   <h5 class="my-3 border-bottom pb-2">Details</h5>
 
+  {% for task in tasks %}
+
+  {% endfor %}
+
   {% for field, errors in form.errors.items() %}
   <div class="alert alert-danger" role="alert">
     <strong>{{ form[field].label }}</strong> : {{ ', '.join(errors) }}
