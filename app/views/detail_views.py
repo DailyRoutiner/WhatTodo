@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import render_template, Blueprint, request, redirect, url_for, g
+from flask import render_template, Blueprint, request, redirect, url_for, g, flash
 
 from .auth_views import login_required      # auth controller
 from ..views.forms import TaskForm          # web form
@@ -33,10 +33,15 @@ def create(index):
 
 
 @bp.route('/edit/<int:index>', methods=['GET','POST'])
+@login_required
 def edit(index):
     todo = Todo.query.get_or_404(index)
+
+    if g.user != todo.user:
+        flash('Not allow modification')
     if request.method == 'POST':
         todo.content = request.form['todo']
+        todo.modify_date = datetime.now()
         db.session.commit()
         return redirect(url_for("main.index"))
     else:

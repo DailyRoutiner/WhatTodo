@@ -44,8 +44,10 @@
             </td>
             <td>{{ todo.user.username }}</td>
             <td>
+              {% if g.user == todo.user %}
               <a class="ml-2" href="{{ url_for('main.check', index=todo.id) }}">Done</a>
               <a class="ml-2" href="{{ url_for('main.delete', index=todo.id) }}">Delete</a>
+              {% endif %}
             </td>
           </tr>
           {% endfor %}

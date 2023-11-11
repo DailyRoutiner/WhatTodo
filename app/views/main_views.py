@@ -1,6 +1,6 @@
 from datetime import datetime
 from .auth_views import login_required
-from flask import render_template, Blueprint, request, redirect, url_for, g
+from flask import render_template, Blueprint, request, redirect, url_for, g, flash
 import random
 
 from app import db
@@ -45,10 +45,14 @@ def check(index):
 
 
 @bp.route("/delete/<int:index>", methods=["GET", "POST"])
+@login_required
 def delete(index):
+    todo = Todo.query.get_or_404(index)
     # del todos[index]
+    if g.user != todo.user:
+        flash('Not allow Deletion')
     if request.method == "POST":
-        db.session.delete(Todo.query.get(index))
+        db.session.delete(todo)
         db.session.commit()
         return redirect(url_for("main.index"))
     else:
