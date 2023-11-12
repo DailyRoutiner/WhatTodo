@@ -18,10 +18,32 @@
 <form  class="post-form my-3" method="post">
   {{ form.csrf_token }}
   <h5 class="my-3 border-bottom pb-2">Details</h5>
-
+  <div class="card my-3">
   {% for task in tasks %}
+    {% if task.comment_set|length > 0 %}
+    <div class="mt-3">
+      {% for comment in task.comment_set %}
+        <div class="comment py-2 text-muted">
+          <span style="white-space: pre-line;">{{ comment.content }} </span>
+
+        <span>
+          - {{ comment.user.username }}, {{ comment.create_date|datetime }}
+          {% if comment.modify_date %}
+          (Modified: {{ comment.modify_date|datetime }}
+          {% endif %}
+        </span>
+        {% if g.user==comment.user %}
+        <a href="{{ url_for('comment.modify_task', comment_id=comment.id) }}" class="small">Modify</a>
+        <a href="#" class="small delete" data-uri="{{ url_for('comment.delete_task', comment_id=comment.id) }}">Delete</a>
+        {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    {% end if %}
 
   {% endfor %}
+
+  </div>
 
   {% for field, errors in form.errors.items() %}
   <div class="alert alert-danger" role="alert">
